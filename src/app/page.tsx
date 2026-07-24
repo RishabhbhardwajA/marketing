@@ -3,6 +3,22 @@
 import { useEffect, useState, FormEvent, useRef } from "react";
 import ServiceCard from "@/components/ServiceCard";
 
+const statsData = [
+  { prefix: "", target: 312, suffix: "%", context: "Organic Growth", client: "SaaS Enterprise" },
+  { prefix: "", target: 4, suffix: ".7x", context: "ROAS Multiplier", client: "E-commerce Brand" },
+  { prefix: "-", target: 58, suffix: "%", context: "CAC Reduction", client: "Fintech Startup" }
+];
+
+const testimonialsData = [
+  { quote: "NorthPeak didn't just improve our metrics; they rebuilt our entire acquisition engine from scratch. Our CAC dropped by 40% in quarter one.", name: "Sarah Jenkins", role: "CMO, TechFlow", avatar: "/img/avatar.png" },
+  { quote: "Most agencies show you dashboards. NorthPeak showed us how to act on them. That's the difference.", name: "Priya Malhotra", role: "VP Marketing, ShipFast" }
+];
+
+const pricingData = [
+  { title: "Growth", desc: "For scaling brands.", price: "₹4,99,000", period: "/month", features: ["4 marketing channels", "Advanced analytics & attribution", "Weekly strategy calls", "Dedicated account manager"], buttonText: "Select Plan", btnClass: "btn-outline", featured: false },
+  { title: "Custom", badge: "Enterprise", desc: "For established industry leaders.", price: "Tailored", period: "", features: ["All channels — paid, organic, email", "Custom data infrastructure", "Executive reporting & QBRs", "SLA guarantees"], buttonText: "Talk to Sales", btnClass: "btn-primary", featured: true }
+];
+
 export default function Home() {
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
@@ -170,7 +186,7 @@ export default function Home() {
             </div>
             <div className="hero-visual ai-observe fade-up-block">
               <div className="image-wrapper">
-                <img src="/img/hero_abstract.png" alt="Abstract 3D Data Visualization" className="hero-image animate-float" loading="eager" />
+                <img src="/img/hero_dashboard.png" alt="Marketing Dashboard Analytics" className="hero-image animate-float" loading="eager" />
                 <div className="glass-metric gm-1">
                   <span className="gm-value">₹<span className="counter" data-target="1200">0</span>Cr+</span>
                   <span className="gm-label">Revenue Generated</span>
@@ -229,38 +245,32 @@ export default function Home() {
           </div>
           
           <div className="stats-grid fade-up-block ai-observe">
-            <div className="stat-card">
-              <span className="stat-number"><span className="counter" data-target="312">0</span>%</span>
-              <span className="stat-context">Organic Growth</span>
-              <span className="stat-client">SaaS Enterprise</span>
-            </div>
-            <div className="stat-card">
-              <span className="stat-number"><span className="counter" data-target="4">0</span>.7x</span>
-              <span className="stat-context">ROAS Multiplier</span>
-              <span className="stat-client">E-commerce Brand</span>
-            </div>
-            <div className="stat-card">
-              <span className="stat-number">-<span className="counter" data-target="58">0</span>%</span>
-              <span className="stat-context">CAC Reduction</span>
-              <span className="stat-client">Fintech Startup</span>
-            </div>
+            {statsData.map((stat, i) => (
+              <div className="stat-card" key={i}>
+                <span className="stat-number">
+                  {stat.prefix}<span className="counter" data-target={stat.target}>0</span>{stat.suffix}
+                </span>
+                <span className="stat-context">{stat.context}</span>
+                <span className="stat-client">{stat.client}</span>
+              </div>
+            ))}
           </div>
 
           <div className="test-grid">
-            <div className="test-card fade-up-block ai-observe">
-              <p>&quot;NorthPeak didn&apos;t just run our ads — they rebuilt our entire funnel. Revenue doubled in five months.&quot;</p>
-              <div>
-                <span className="test-name">Rahul Sharma</span>
-                <span className="test-role">CMO, Velora Health India</span>
-              </div>
-            </div>
-            <div className="test-card fade-up-block ai-observe">
-              <p>&quot;Most agencies show you dashboards. NorthPeak showed us how to act on them. That&apos;s the difference.&quot;</p>
-              <div>
-                <span className="test-name">Priya Malhotra</span>
-                <span className="test-role">VP Marketing, ShipFast</span>
-              </div>
-            </div>
+            {testimonialsData.map((test, i) => (
+              <article className="test-card fade-up-block ai-observe" key={i}>
+                <div>
+                  <p>&quot;{test.quote}&quot;</p>
+                </div>
+                <div className="test-author">
+                  {test.avatar && <img src={test.avatar} alt={test.name} className="test-avatar" />}
+                  <div>
+                    <span className="test-name">{test.name}</span>
+                    <span className="test-role">{test.role}</span>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -275,32 +285,20 @@ export default function Home() {
           </div>
           
           <div className="pricing-grid">
-            <div className="pricing-card fade-up-block ai-observe">
-              <h3>Growth</h3>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>For scaling brands.</p>
-              <span className="price">₹4,99,000 <span>/month</span></span>
-              <ul className="pricing-features">
-                <li>4 marketing channels</li>
-                <li>Advanced analytics &amp; attribution</li>
-                <li>Weekly strategy calls</li>
-                <li>Dedicated account manager</li>
-              </ul>
-              <a href="#contact" className="btn btn-outline">Select Plan</a>
-            </div>
-            
-            <div className="pricing-card featured fade-up-block ai-observe">
-              <span className="pricing-badge">Enterprise</span>
-              <h3>Custom</h3>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>For established industry leaders.</p>
-              <span className="price">Tailored</span>
-              <ul className="pricing-features">
-                <li>All channels — paid, organic, email</li>
-                <li>Custom data infrastructure</li>
-                <li>Executive reporting &amp; QBRs</li>
-                <li>SLA guarantees</li>
-              </ul>
-              <a href="#contact" className="btn btn-primary">Talk to Sales</a>
-            </div>
+            {pricingData.map((plan, i) => (
+              <div className={`pricing-card fade-up-block ai-observe ${plan.featured ? "featured" : ""}`} key={i}>
+                {plan.badge && <span className="pricing-badge">{plan.badge}</span>}
+                <h3>{plan.title}</h3>
+                <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>{plan.desc}</p>
+                <span className="price">{plan.price} <span>{plan.period}</span></span>
+                <ul className="pricing-features">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx}>{feature}</li>
+                  ))}
+                </ul>
+                <a href="#contact" className={`btn ${plan.btnClass}`}>{plan.buttonText}</a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
